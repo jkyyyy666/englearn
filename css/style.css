@@ -1,4 +1,4 @@
-* {
+﻿* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -25,7 +25,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Lucida Sans Unicode', 'Arial Unicode MS', Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -260,6 +260,7 @@ body {
 }
 
 .word-item .word-phonetic {
+  font-family: 'Noto Sans', 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
   font-size: 13px;
   color: var(--text-secondary);
   margin-top: 2px;
@@ -350,6 +351,7 @@ body {
 }
 
 .flashcard .fc-phonetic {
+  font-family: 'Noto Sans', 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
   font-size: 16px;
   color: var(--text-secondary);
   margin-top: 8px;
@@ -987,6 +989,7 @@ body {
 }
 
 .chinese-pinyin {
+  font-family: 'Noto Sans', 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
   font-size: 20px;
   color: #EF6C00;
   font-style: italic;
@@ -1038,6 +1041,7 @@ body {
     color: #FF8A65;
   }
   .chinese-pinyin {
+  font-family: 'Noto Sans', 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
     color: #FFB74D;
   }
   .chinese-meaning {
