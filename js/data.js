@@ -1,4 +1,4 @@
-// 英语学习 App - 内置词汇库
+﻿// 英语学习 App - 内置词汇库
 const VOCABULARY = [
 { word: "apple", phonetic: "\/ˈæp.əl\/", meaning: "苹果", cn: "我每天吃一个苹果。", example: "I eat an apple every day.", level: 1 },
 { word: "book", phonetic: "\/bʊk\/", meaning: "书", cn: "这本书很有趣。", example: "This book is interesting.", level: 1 },
