@@ -16,7 +16,20 @@ document.addEventListener("DOMContentLoaded", function() {
   showPage("home");
   loadHomePage();
   
-  // 浜嬩欢濮旀墭
+  // Restore notification
+  try {
+    var savedFav = getFavorites();
+    var savedProg = getProgress();
+    var wordCount = Object.keys(savedProg).length;
+    if (savedFav.length > 0 || wordCount > 0) {
+      var msgs = [];
+      if (savedFav.length > 0) msgs.push("已恢复 " + savedFav.length + " 个收藏");
+      if (wordCount > 0) msgs.push("已恢复 " + wordCount + " 条学习记录");
+      setTimeout(function() { showToast(msgs.join("，")); }, 500);
+    }
+  } catch(e) {}
+  
+  // 事件委托  // 浜嬩欢濮旀墭
   document.getElementById("word-list").addEventListener("click", function(e) {
     const item = e.target.closest(".word-item");
     if (item) showWordDetail(parseInt(item.dataset.index));

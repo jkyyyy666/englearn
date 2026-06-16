@@ -2315,6 +2315,18 @@ const VOCABULARY = [
 const STORAGE_KEY = 'english_app_progress';
 const FAVORITES_KEY = 'english_app_favorites';
 const CUSTOM_WORDS_KEY = 'english_app_custom';
+const STORAGE_VERSION_KEY = 'english_app_version';
+const STORAGE_VERSION = 1;
+
+function checkStorageVersion() {
+  try {
+    var savedVer = parseInt(localStorage.getItem(STORAGE_VERSION_KEY)) || 0;
+    if (savedVer < STORAGE_VERSION) {
+      localStorage.setItem(STORAGE_VERSION_KEY, String(STORAGE_VERSION));
+    }
+  } catch(e) {}
+}
+
 
 function getProgress() {
   try {
