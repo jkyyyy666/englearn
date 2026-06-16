@@ -310,23 +310,35 @@ function initSentenceMode() {
 
 function highlightCnWord(cnSentence, cnMeaning) {
   if (!cnMeaning || !cnSentence) return cnSentence || '';
-  // Try each meaning part separated by ；or ;
   var parts = cnMeaning.split(/[；;]/);
   for (var i = 0; i < parts.length; i++) {
     var p = parts[i].trim();
     if (!p) continue;
-    // Try to find the meaning in the cn sentence
     var idx = cnSentence.indexOf(p);
     if (idx >= 0) {
       return cnSentence.substring(0, idx) + '<span class="cn-highlight">' + p + '</span>' + cnSentence.substring(idx + p.length);
     }
   }
-  // If not found, try matching individual characters from each part
+  // Try longer substrings first for better matching
   for (var j = 0; j < parts.length; j++) {
-    var p3 = parts[j].trim();
+    var p2 = parts[j].trim();
+    if (!p2) continue;
+    for (var len = p2.length; len >= 2; len--) {
+      for (var s = 0; s + len <= p2.length; s++) {
+        var sub = p2.substring(s, s + len);
+        var idx2 = cnSentence.indexOf(sub);
+        if (idx2 >= 0) {
+          return cnSentence.substring(0, idx2) + '<span class="cn-highlight">' + sub + '</span>' + cnSentence.substring(idx2 + sub.length);
+        }
+      }
+    }
+  }
+  // Try single character matching  
+  for (var k = 0; k < parts.length; k++) {
+    var p3 = parts[k].trim();
     if (!p3) continue;
-    for (var k = 0; k < p3.length; k++) {
-      var ch = p3.charAt(k);
+    for (var m = 0; m < p3.length; m++) {
+      var ch = p3.charAt(m);
       if (ch === ' ' || ch === '') continue;
       var idx3 = cnSentence.indexOf(ch);
       if (idx3 >= 0) {
@@ -334,10 +346,9 @@ function highlightCnWord(cnSentence, cnMeaning) {
       }
     }
   }
-  // Last resort: append highlighted meaning at the end
-  return cnSentence + ' <span class="cn-highlight">[' + parts.join('/') + ']</span>';
+  // Last resort: add meaning with parentheses (no brackets)
+  return cnSentence + ' <span class="cn-highlight">(' + parts.join('/') + ')</span>';
 }
-
 function renderSentence() {
   if (sentenceIndex >= sentenceWords.length) {
     const pct = Math.round(sentenceCorrect / sentenceWords.length * 100);
