@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <!-- iOS PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="英语学习">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="icons/icon-76.png">
+  <link rel="mask-icon" href="icons/icon.svg" color="#4A90D9">
+  <meta name="theme-color" content="#4A90D9">
+  
+  <!-- iOS Splash Screens -->
+  <link rel="apple-touch-startup-image" href="icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="icons/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="icons/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="icons/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="icons/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="icons/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+  
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="学习英语">
+  
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="theme-color" content="#4A90D9">
+  <title>英语学习</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <h1>📚 英语学习</h1>
+  </header>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- 首页 -->
+    <div class="page active" id="page-home">
+      <!-- 每日进度 -->
+      <div class="settings-section">
+        <h3>📊 每日学习</h3>
+        <div id="daily-progress-text" style="font-size:14px;margin-bottom:8px"></div>
+        <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden">
+          <div id="daily-progress-bar" style="height:100%;background:var(--primary);border-radius:4px;width:0%;transition:width 0.5s"></div>
+        </div>
+      </div>
+      
+      <!-- 统计 -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-total">0</div>
+          <div class="stat-label">词汇量</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-learned">0</div>
+          <div class="stat-label">已学习</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-mastered">0</div>
+          <div class="stat-label">已掌握</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-favorites">0</div>
+          <div class="stat-label">收藏</div>
+        </div>
+      </div>
+
+      <!-- 快捷操作 -->
+      <div class="quick-actions">
+        <div class="action-card" onclick="showPage('study')">
+          <div class="action-icon">📋</div>
+          <div class="action-title">学习模式</div>
+          <div class="action-desc">浏览全部词汇</div>
+        </div>
+        <div class="action-card" onclick="showPage('study');initStudy('favorites')">
+          <div class="action-icon">⭐</div>
+          <div class="action-title">收藏复习</div>
+          <div class="action-desc">复习收藏的单词</div>
+        </div>
+        <div class="action-card" onclick="showPage('quiz')">
+          <div class="action-icon">🎲</div>
+          <div class="action-title">词汇测试</div>
+          <div class="action-desc">测试你的词汇量</div>
+        </div>
+        <div class="action-card" onclick="showPage('words')">
+          <div class="action-icon">📋</div>
+          <div class="action-title">词汇列表</div>
+          <div class="action-desc">浏览全部词汇</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 单词列表 -->
+    <div class="page" id="page-words">
+      <div class="search-bar">
+        <input type="text" id="word-search" placeholder="🔍 搜索单词或词汇...">
+      </div>
+      <div class="level-selector">
+        <button class="level-btn active" data-level="0">全部</button>
+        <button class="level-btn" data-level="1">基础</button>
+        <button class="level-btn" data-level="2">常用</button>
+        <button class="level-btn" data-level="3">进阶</button>
+      </div>
+      <div id="word-list" class="word-list"></div>
+    </div>
+
+    <!-- 学习模式页面 -->
+    <div class="page" id="page-study">
+      <h2 style="font-size:18px;margin-bottom:4px">📖 学习模式</h2>
+      <div class="level-selector" style="gap:6px">
+        <button class="level-btn active" data-study="all">全部</button>
+        <button class="level-btn" data-study="favorites">收藏</button>
+        <button class="level-btn" data-study="sentence">📝 语句填空</button>
+      </div>
+      <div id="flashcard-area" class="flashcard-container">
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <div class="empty-text">已掌握...</div>
+        </div>
+      </div>
+      <div id="flashcard-controls"></div>
+    </div>
+
+    <!-- 中文学习 -->
+    <div class="page" id="page-chinese">
+      <h2 style="font-size:18px;margin-bottom:4px">🀄 中文学习</h2>
+      <div class="level-selector" style="gap:6px">
+        <button class="level-btn active" data-clvl="all">全部词汇</button>
+      </div>
+      <div id="chinese-card-area" class="flashcard-container">
+        <div class="empty-state">
+          <div class="empty-icon">🀄</div>
+          <div class="empty-text">点击下方按钮开始学习</div>
+        </div>
+      </div>
+      <div id="chinese-card-controls"></div>
+    </div>
+
+    <!-- 设置 -->
+    <div class="page" id="page-quiz">
+      <h2 style="font-size:18px;margin-bottom:16px">✍️ 词汇测试</h2>
+      <div id="quiz-area"></div>
+    </div>
+
+    <!-- 设置 -->
+    <div class="page" id="page-settings">
+      <div class="settings-section">
+        <h3>📊 学习统计</h3>
+        <div class="settings-item">
+          <span class="label">总词汇数</span>
+          <span class="value" id="stat-total-words">0</span>
+        </div>
+        <div class="settings-item">
+          <span class="label">内置词汇</span>
+          <span class="value" id="stat-builtin">0</span>
+        </div>
+        <div class="settings-item">
+          <span class="label">自定义词汇</span>
+          <span class="value" id="stat-custom">0</span>
+        </div>
+        <div class="settings-item">
+          <span class="label">已复习</span>
+          <span class="value" id="stat-reviewed">0</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>🎯 每日目标</h3>
+        <div class="level-selector" style="gap:6px">
+          <button class="level-btn goal-option" data-goal="5">5个</button>
+          <button class="level-btn goal-option active" data-goal="10">10个</button>
+          <button class="level-btn goal-option" data-goal="20">20个</button>
+          <button class="level-btn goal-option" data-goal="30">30个</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>➕ 添加自定义单词</h3>
+        <div class="modal-field">
+          <label>单词 *</label>
+          <input type="text" id="new-word" placeholder="单词: beautiful">
+        </div>
+        <div class="modal-field">
+          <label>释义 *</label>
+          <input type="text" id="new-meaning" placeholder="释义: 中文释义">
+        </div>
+        <div class="modal-field">
+          <label>音标</label>
+          <input type="text" id="new-phonetic" placeholder="音标: /ˈbjuː.tə.fəl/">
+        </div>
+        <div class="modal-field">
+          <label>例句</label>
+          <input type="text" id="new-example" placeholder="例句: What a beautiful day!">
+        </div>
+        <button class="btn-primary" id="add-word-btn">添加单词</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>🗑️ 清除数据</h3>
+        <button class="btn-primary btn-danger" id="btn-clear-data">清除所有数据</button>
+        <p style="font-size:12px;color:var(--text-secondary);margin-top:8px">这将清除所有学习记录且无法恢复</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <nav class="tab-bar">
+    <button class="tab-item active" data-page="home">
+      <span class="tab-icon">🏠</span>
+      <span>首页</span>
+    </button>
+    <button class="tab-item" data-page="words">
+      <span class="tab-icon">📖</span>
+      <span>单词</span>
+    </button>
+    <button class="tab-item" data-page="study">
+      <span class="tab-icon">📚</span>
+      <span>学习</span>
+    </button>
+    <button class="tab-item" data-page="quiz">
+      <span class="tab-icon">📝</span>
+      <span>测试</span>
+    </button>
+    <button class="tab-item" data-page="chinese">
+    <span class="tab-icon">🀄</span>
+    <span>中文</span>
+  </button>
+
+    <button class="tab-item" data-page="settings">
+      <span class="tab-icon">⚙️</span>
+      <span>设置</span>
+    </button>
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal-overlay"></div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/chinese-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").then(function(reg) {
+        console.log("SW registered");
+      }).catch(function(err) {
+        console.log("SW failed:", err);
+      });
+    }
+  </script>
+</body>
+</html>
+
