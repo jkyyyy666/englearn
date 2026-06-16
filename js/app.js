@@ -132,11 +132,11 @@ function loadWordList(query) {
     w.word.toLowerCase().includes(search) || w.meaning.includes(search));
   
   if (filtered.length === 0) {
-    document.getElementById("word-list").innerHTML = '<div class="empty-state"><div class="empty-icon">馃攳</div><div class="empty-text">娌℃湁鎵惧埌鍖归厤鐨勫崟璇?/div></div>';
+    document.getElementById("word-list").innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">没有找到匹配的单词</div></div>';
     return;
   }
   
-  const levelNames = ["", "猸?鍩虹", "猸愨瓙 甯哥敤", "猸愨瓙猸?杩涢樁"];
+  const levelNames = ["", "基础", "常用", "进阶"];
   
   document.getElementById("word-list").innerHTML = filtered.map((w, i) => {
     const wid = w.id || "w" + Date.now() + i;
@@ -296,7 +296,7 @@ function initSentenceMode() {
     return w.example.toLowerCase().includes(w.word.toLowerCase());
   });
   if (sentenceWords.length === 0) {
-    document.getElementById("flashcard-area").innerHTML = '<div class="empty-state"><div class="empty-icon">馃摑</div><div class="empty-text">鏆傛棤閫傚悎濉┖鐨勪緥鍙?/div></div>';
+    document.getElementById("flashcard-area").innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">暂无适合填空的例句</div></div>';
     document.getElementById("flashcard-controls").innerHTML = "";
     return;
   }
@@ -541,7 +541,7 @@ function renderQuiz() {
   
   const mode = Math.random() > 0.5 ? "en2cn" : "cn2en";
   
-  // en2cn: 閫夐」涓轰腑鏂囬噴涔夛紱cn2en: 閫夐」涓鸿嫳鏂囧崟璇?
+  // en2cn: 选项为中文释义; cn2en: 选项为英文单词
   let options, correctAnswer;
   if (mode === "en2cn") {
     options = [correctMeaning];
