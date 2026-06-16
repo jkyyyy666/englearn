@@ -1,4 +1,4 @@
-﻿// ========== 鑻辫\u5b66\u4e60 App - 涓婚€昏緫 ==========
+﻿// ========== 英语学习 App - 主逻辑 ==========
 
 let currentPage = "home";
 let currentWords = [];
@@ -219,7 +219,7 @@ function initStudy(mode) {
   });
   
   if (pool.length === 0) {
-    document.getElementById("flashcard-area").innerHTML = '<div class="empty-state"><div class="empty-icon">馃摎</div><div class="empty-text">鏆傛棤寰呭涔犵殑鍗曡瘝</div></div>';
+    document.getElementById("flashcard-area").innerHTML = '<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-text">暂无待学习的单词</div></div>';
     document.getElementById("flashcard-controls").innerHTML = "";
     return;
   }
@@ -354,10 +354,10 @@ function renderSentence() {
   document.getElementById("flashcard-area").innerHTML =
     '<div class="sentence-card">' +
       '<div class="sentence-text">' + sentenceDisplay + '</div>' +
-      (w.cn ? '<div class="sentence-cn">📗  ' + highlightCnWord(w.cn, w.meaning) + '</div>' : '<div class="sentence-cn">📗  (鏆傛棤涓枃渚嬪彞缈昏瘧) 璇ヨ瘝鍚箟: ' + w.meaning + '</div>') +
+      (w.cn ? '<div class="sentence-cn">📗  ' + highlightCnWord(w.cn, w.meaning) + '</div>' : '<div class="sentence-cn">📗  (暂无中文例句翻译) 该词含义: ' + w.meaning + '</div>') +
 
       '<div class="sentence-input-area">' +
-        '<input type="text" id="sentence-input" placeholder="杈撳叆鑻辨枃鍗曡瘝..." autocomplete="off">' +
+        '<input type="text" id="sentence-input" placeholder="输入英文单词..." autocomplete="off">' +
         '<button class="sentence-btn sentence-btn-primary" id="sentence-submit" onclick="checkSentenceAnswer()">确认</button>' +
       '</div>' +
       '<div class="sentence-feedback" id="sentence-feedback"></div>' +
